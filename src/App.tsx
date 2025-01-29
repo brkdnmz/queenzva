@@ -39,7 +39,7 @@ const VALID_QUEENS_POSITIONS_INTEGERS = VALID_QUEENS_POSITIONS.map(
 
 function App() {
   const [board] = useState(() => prepareQueensBoard());
-  const [queenInserted, setQueenInserted] = useState<Record<number, string>>(
+  const [queenInserted, setQueenInserted] = useState<Record<string, string>>(
     {}
   );
   const [startTime] = useState(new Date());

@@ -58,6 +58,11 @@ export function prepareQueensBoard() {
 
   console.log(Date.now());
 
+  let foundBoard: string[][] = Array.from({ length: N }, () =>
+    Array.from({ length: M }, () => "")
+  );
+
+  // eslint-disable-next-line no-constant-condition
   while (1) {
     const colors = shuffle([...COLORS]);
     const board = Array.from({ length: N }, () =>
@@ -138,6 +143,9 @@ export function prepareQueensBoard() {
     console.log(solutionCount);
     console.log(Date.now());
 
-    return board;
+    foundBoard = board;
+    break;
   }
+
+  return foundBoard;
 }
