@@ -53,7 +53,7 @@ export function precalculateValidQueensPositions() {
 export function prepareQueensBoard() {
   const queens =
     VALID_QUEENS_POSITIONS[
-      Math.floor(random.next() * VALID_QUEENS_POSITIONS.length)
+      Math.floor(random.generator!.next() * VALID_QUEENS_POSITIONS.length)
     ];
 
   console.log(Date.now());
@@ -76,19 +76,19 @@ export function prepareQueensBoard() {
       cnt--;
       // while (1) {
       // color a random neighbor also
-      const dx = [-1, 0, 1, 0];
-      const dy = [0, -1, 0, 1];
-      const dir = Math.floor(random.next() * 4);
-      const nrow = x + dx[dir];
-      const ncol = y + dy[dir];
-      if (nrow < 0 || nrow >= N || ncol < 0 || ncol >= M) {
-        continue;
-      }
-      if (!board[nrow][ncol]) {
-        board[nrow][ncol] = colors[i];
-        cnt--;
-        // break;
-      }
+      // const dx = [-1, 0, 1, 0];
+      // const dy = [0, -1, 0, 1];
+      // const dir = Math.floor(random.generator!.next() * 4);
+      // const nrow = x + dx[dir];
+      // const ncol = y + dy[dir];
+      // if (nrow < 0 || nrow >= N || ncol < 0 || ncol >= M) {
+      //   continue;
+      // }
+      // if (!board[nrow][ncol]) {
+      //   board[nrow][ncol] = colors[i];
+      //   cnt--;
+      //   // break;
+      // }
       // }
     }
 
@@ -96,14 +96,14 @@ export function prepareQueensBoard() {
     const dy = [0, -1, 0, 1];
 
     while (cnt) {
-      const row = Math.floor(random.next() * N);
-      const col = Math.floor(random.next() * M);
+      const row = Math.floor(random.generator!.next() * N);
+      const col = Math.floor(random.generator!.next() * M);
 
       if (!board[row][col]) {
         continue;
       }
 
-      const dir = Math.floor(random.next() * 4);
+      const dir = Math.floor(random.generator!.next() * 4);
 
       const nrow = row + dx[dir];
       const ncol = col + dy[dir];

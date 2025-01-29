@@ -3,7 +3,7 @@ export function shuffle<T>(array: T[]): T[] {
   let currentIndex = array.length;
 
   while (currentIndex != 0) {
-    const randomIndex = Math.floor(random.next() * currentIndex);
+    const randomIndex = Math.floor(random.generator!.next() * currentIndex);
     currentIndex--;
 
     [array[currentIndex], array[randomIndex]] = [

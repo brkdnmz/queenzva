@@ -9,4 +9,6 @@ import Rand from "rand-seed";
  bedirhancotur is my student number. I use it as a seed for random number generation.
  */
 export const seed = Math.random().toString();
-export const random = new Rand(seed);
+export const random: { generator: Rand | null } = {
+  generator: null,
+};
