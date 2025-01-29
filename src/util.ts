@@ -1,8 +1,9 @@
+import { random } from "./random";
 export function shuffle<T>(array: T[]): T[] {
   let currentIndex = array.length;
 
   while (currentIndex != 0) {
-    const randomIndex = Math.floor(Math.random() * currentIndex);
+    const randomIndex = Math.floor(random.next() * currentIndex);
     currentIndex--;
 
     [array[currentIndex], array[randomIndex]] = [

@@ -1,21 +1,23 @@
+import { random } from "./random";
 import { QueenPositions } from "./types";
 import { shuffle } from "./util";
 
-const N = 8;
-const M = 8;
+export const N = 8;
+export const M = 8;
 
 const COLORS = [
-  "gray",
-  "white",
-  "yellow",
-  "red",
-  "blue",
-  "green",
-  "purple",
-  "orange",
+  "#fbb392",
+  "#809884",
+  "#e5d185",
+  "#f193a4",
+  "#d99ffb",
+  "#94e1bb",
+  "#97bafe",
+  "#ffcdd8",
+  "#f1f1f1",
 ];
 
-const VALID_QUEENS_POSITIONS: QueenPositions[] = [];
+export const VALID_QUEENS_POSITIONS: QueenPositions[] = [];
 
 export function precalculateValidQueensPositions() {
   const queens: QueenPositions = [];
@@ -49,48 +51,93 @@ export function precalculateValidQueensPositions() {
 }
 
 export function prepareQueensBoard() {
-  const board = Array.from({ length: N }, () =>
-    Array.from({ length: M }, () => "")
-  );
-
   const queens =
     VALID_QUEENS_POSITIONS[
-      Math.floor(Math.random() * VALID_QUEENS_POSITIONS.length)
+      Math.floor(random.next() * VALID_QUEENS_POSITIONS.length)
     ];
-  const colors = shuffle([...COLORS]);
 
-  let cnt = N * M;
-  for (let i = 0; i < queens.length; i++) {
-    const { x, y } = queens[i];
-    board[x][y] = colors[i];
-    cnt--;
-  }
+  console.log(Date.now());
 
-  const dx = [-1, 0, 1, 0];
-  const dy = [0, -1, 0, 1];
+  while (1) {
+    const colors = shuffle([...COLORS]);
+    const board = Array.from({ length: N }, () =>
+      Array.from({ length: M }, () => "")
+    );
 
-  while (cnt) {
-    const row = Math.floor(Math.random() * N);
-    const col = Math.floor(Math.random() * M);
-
-    if (!board[row][col]) {
-      continue;
-    }
-
-    const dir = Math.floor(Math.random() * 4);
-
-    const nrow = row + dx[dir];
-    const ncol = col + dy[dir];
-
-    if (nrow < 0 || nrow >= N || ncol < 0 || ncol >= M) {
-      continue;
-    }
-
-    if (!board[nrow][ncol]) {
-      board[nrow][ncol] = board[row][col];
+    let cnt = N * M;
+    for (let i = 0; i < queens.length; i++) {
+      const { x, y } = queens[i];
+      board[x][y] = colors[i];
       cnt--;
+      // while (1) {
+      // color a random neighbor also
+      const dx = [-1, 0, 1, 0];
+      const dy = [0, -1, 0, 1];
+      const dir = Math.floor(random.next() * 4);
+      const nrow = x + dx[dir];
+      const ncol = y + dy[dir];
+      if (nrow < 0 || nrow >= N || ncol < 0 || ncol >= M) {
+        continue;
+      }
+      if (!board[nrow][ncol]) {
+        board[nrow][ncol] = colors[i];
+        cnt--;
+        // break;
+      }
+      // }
     }
-  }
 
-  return board;
+    const dx = [-1, 0, 1, 0];
+    const dy = [0, -1, 0, 1];
+
+    while (cnt) {
+      const row = Math.floor(random.next() * N);
+      const col = Math.floor(random.next() * M);
+
+      if (!board[row][col]) {
+        continue;
+      }
+
+      const dir = Math.floor(random.next() * 4);
+
+      const nrow = row + dx[dir];
+      const ncol = col + dy[dir];
+
+      if (nrow < 0 || nrow >= N || ncol < 0 || ncol >= M) {
+        continue;
+      }
+
+      if (!board[nrow][ncol]) {
+        board[nrow][ncol] = board[row][col];
+        cnt--;
+      }
+    }
+
+    let solutionCount = 0;
+    for (const otherQueens of VALID_QUEENS_POSITIONS) {
+      const colorsOccupied = new Set();
+      let ok = true;
+      for (const queen of otherQueens) {
+        if (colorsOccupied.has(board[queen.x][queen.y])) {
+          ok = false;
+          break;
+        }
+        colorsOccupied.add(board[queen.x][queen.y]);
+      }
+      solutionCount += +ok;
+      // if (solutionCount > 1) {
+      //   console.log(solutionCount);
+      // }
+
+      if (solutionCount > 1) break;
+    }
+
+    // console.log(solutionCount);
+    if (solutionCount !== 1) continue;
+
+    console.log(solutionCount);
+    console.log(Date.now());
+
+    return board;
+  }
 }
