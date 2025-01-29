@@ -1,5 +1,9 @@
 import clsx from "clsx";
-import { differenceInMinutes, differenceInSeconds } from "date-fns";
+import {
+  differenceInMilliseconds,
+  differenceInMinutes,
+  differenceInSeconds,
+} from "date-fns";
 import Rand from "rand-seed";
 import { useEffect, useState } from "react";
 import {
@@ -115,7 +119,16 @@ function App() {
             {(differenceInSeconds(currentTime, startTime) % 60)
               .toString()
               .padStart(2, "0")}
+            {won
+              ? (
+                  "." +
+                  (differenceInMilliseconds(currentTime, startTime) % 1000)
+                )
+                  .toString()
+                  .padStart(3, "0")
+              : null}
           </div>
+          {won && <InzvaQueen won={false} />}
           <div
             className={`inline-grid ${N === 8 ? "grid-cols-8" : "grid-cols-9"}`}
           >
