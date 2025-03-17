@@ -26,7 +26,9 @@ function isInDanger(
   const sameRowCol = Object.entries(queenInserted).some(([key, value]) => {
     const i = Math.floor(+key / N);
     const j = +key % M;
-    return value === "q" && (i === row || j === col);
+    return (
+      value === "q" && (i === row || j === col) && !(i === row && j === col)
+    );
   });
   // queen in one in 8 neighbors
   // copilot ate it copilot is so hungry
