@@ -11,7 +11,6 @@ import {
   N,
   precalculateValidQueensPositions,
   prepareQueensBoard,
-  VALID_QUEENS_POSITIONS,
 } from "./board-util";
 import { HashInput } from "./components/hash-input";
 import { InzvaQueen } from "./inzva-queen";
@@ -39,9 +38,22 @@ function isInDanger(
   return sameRowCol || neighbor;
 }
 
-const VALID_QUEENS_POSITIONS_INTEGERS = VALID_QUEENS_POSITIONS.map(
-  (positionList) => positionList.map((position) => position.x * N + position.y)
-).map((x) => x.sort().join());
+function hasWon(board: string[][], queenInserted: Record<string, string>) {
+  const queenCnt: Record<string, number> = {};
+  let filledCnt = 0;
+  for (let i = 0; i < N; i++) {
+    for (let j = 0; j < N; j++) {
+      if (queenInserted[N * i + j] === "q") {
+        if (isInDanger(i, j, queenInserted)) return false;
+        queenCnt[board[i][j]] ??= 0;
+        if (queenCnt[board[i][j]]++ > 0) return false;
+        filledCnt++;
+      }
+    }
+  }
+
+  return filledCnt === N;
+}
 
 function App() {
   const [board, setBoard] = useState<string[][]>();
@@ -53,12 +65,7 @@ function App() {
   const [prepared, setPrepared] = useState(false);
   const [started, setStarted] = useState(false);
 
-  const won = VALID_QUEENS_POSITIONS_INTEGERS.includes(
-    Object.keys(queenInserted)
-      .filter((e) => queenInserted[e] === "q")
-      .sort()
-      .join()
-  );
+  const won = hasWon(board!, queenInserted);
 
   useEffect(() => {
     if (won) return;
@@ -69,8 +76,6 @@ function App() {
     return () => clearInterval(interval);
   }, [won]);
 
-  // check if queenInserted is in VALID_QUEENS_POSITIONS
-  // write this check's code
   if (won) {
     console.log("You win!");
   }
