@@ -102,7 +102,7 @@ function Game() {
 
   useEffect(() => {
     if (!isValidHash(hash)) {
-      setError("Invalid hash");
+      setError("Hatalı hash");
       return;
     }
 
