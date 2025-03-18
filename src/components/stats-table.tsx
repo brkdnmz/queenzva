@@ -35,32 +35,32 @@ function StatsTable({ stats }: StatsTableProps) {
                 <thead>
                   <tr className="bg-gray-100">
                     <th 
-                      className="px-2 md:px-4 py-2 cursor-pointer hover:bg-gray-200 max-w-[100px]"
+                      className="px-2 md:px-4 py-2 cursor-pointer hover:bg-gray-200 max-w-[100px] text-center"
                     >
                       <div className="truncate">Kod</div>
                     </th>
                     <th 
-                      className="px-2 md:px-4 py-2 cursor-pointer hover:bg-gray-200 whitespace-nowrap"
+                      className="px-2 md:px-4 py-2 cursor-pointer hover:bg-gray-200 whitespace-nowrap text-center"
                     >
                       Süre
                     </th>
                     <th 
-                      className="px-2 md:px-4 py-2 cursor-pointer hover:bg-gray-200 whitespace-nowrap"
+                      className="px-2 md:px-4 py-2 cursor-pointer hover:bg-gray-200 whitespace-nowrap text-center"
                     >
                       Hamle
                     </th>
                     <th 
-                      className="px-2 md:px-4 py-2 cursor-pointer hover:bg-gray-200 whitespace-nowrap"
+                      className="px-2 md:px-4 py-2 cursor-pointer hover:bg-gray-200 whitespace-nowrap text-center"
                     >
                       Durum
                     </th>
                     <th 
-                      className="px-2 md:px-4 py-2 cursor-pointer hover:bg-gray-200 whitespace-nowrap"
+                      className="px-2 md:px-4 py-2 cursor-pointer hover:bg-gray-200 whitespace-nowrap text-center"
                     >
                       Tarih
                     </th>
                     <th 
-                      className="px-2 md:px-4 py-2 cursor-pointer hover:bg-gray-200 whitespace-nowrap"
+                      className="px-2 md:px-4 py-2 cursor-pointer hover:bg-gray-200 whitespace-nowrap text-center"
                     >
                       Tekrar Oyna
                     </th>
@@ -69,18 +69,18 @@ function StatsTable({ stats }: StatsTableProps) {
                 <tbody>
                   {paginatedStats.map((stat, index) => (
                     <tr key={index} className="border-t hover:bg-gray-50">
-                      <td className="px-2 md:px-4 py-2 text-xs md:text-sm max-w-[100px]">
+                      <td className="px-2 md:px-4 py-2 text-xs md:text-sm max-w-[100px] text-center">
                         <div className="truncate" title={stat.hash}>{stat.hash}</div>
                       </td>
-                      <td className="px-2 md:px-4 py-2 text-xs md:text-sm whitespace-nowrap">{formatDuration(stat.duration)}</td>
-                      <td className="px-2 md:px-4 py-2 text-xs md:text-sm whitespace-nowrap">{stat.moves}</td>
-                      <td className="px-2 md:px-4 py-2 text-xs md:text-sm whitespace-nowrap">
+                      <td className="px-2 md:px-4 py-2 text-xs md:text-sm whitespace-nowrap text-center">{formatDuration(stat.duration)}</td>
+                      <td className="px-2 md:px-4 py-2 text-xs md:text-sm whitespace-nowrap text-center">{stat.moves}</td>
+                      <td className="px-2 md:px-4 py-2 text-xs md:text-sm whitespace-nowrap text-center">
                         <span className={`px-2 py-1 rounded-full text-xs ${stat.completed ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                           {stat.completed ? 'Kazandın' : 'Tamamlanmadı'}
                         </span>
                       </td>
-                      <td className="px-2 md:px-4 py-2 text-xs md:text-sm whitespace-nowrap">{new Date(stat.startTime).toLocaleDateString() + " " + new Date(stat.startTime).toLocaleTimeString()}</td>
-                      <td className="px-2 md:px-4 py-2 text-xs md:text-sm whitespace-nowrap">
+                      <td className="px-2 md:px-4 py-2 text-xs md:text-sm whitespace-nowrap text-center">{new Date(stat.startTime).toLocaleDateString() + " " + new Date(stat.startTime).toLocaleTimeString()}</td>
+                      <td className="px-2 md:px-4 py-2 text-xs md:text-sm whitespace-nowrap text-center">
                         <button className="px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800"
                           onClick={() => {
                             navigate(`/g/${stat.hash}`);
