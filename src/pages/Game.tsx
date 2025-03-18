@@ -15,6 +15,10 @@ import {
 import { InzvaQueen } from "../inzva-queen";
 import { random } from "../random";
 import { useParams } from "react-router-dom";
+import User from "../utils/user";
+import { StatsEntry } from "../types/user";
+import { v4 as uuidv4 } from 'uuid';
+
 precalculateValidQueensPositions();
 
 function isInDanger(
@@ -58,6 +62,11 @@ function hasWon(board: string[][], queenInserted: Record<string, string>) {
 
 function Game() {
   const { hash } = useParams();
+  const user = new User();
+  const [stats, setStats] = useState<StatsEntry | null>(null);
+  const [statsSaved, setStatsSaved] = useState(false);
+  const [statsBestTime, setStatsBestTime] = useState(false);
+
   const [board, setBoard] = useState<string[][]>();
   const [queenInserted, setQueenInserted] = useState<Record<string, string>>(
     {}
@@ -69,6 +78,27 @@ function Game() {
   const [error, setError] = useState("");
   const won = hasWon(board!, queenInserted);
 
+  // Handle game completion
+  useEffect(() => {
+    if (won && stats && !statsSaved) {
+      const updatedStats = {
+        ...stats,
+        duration: differenceInMilliseconds(currentTime, startTime),
+        moves: Object.keys(queenInserted).length,
+        completed: true
+      };
+
+      const bestTime = user.checkBestTime(updatedStats);
+      if (bestTime) {
+        setStatsBestTime(true);
+      }
+
+      user.addStats(updatedStats);
+      setStatsSaved(true);
+    }
+  }, [won, stats, statsSaved, currentTime, startTime, queenInserted]);
+
+  // Handle timer
   useEffect(() => {
     if (won) return;
     const interval = setInterval(() => {
@@ -102,7 +132,7 @@ function Game() {
 
   useEffect(() => {
     if (!isValidHash(hash)) {
-      setError("Hatalı hash");
+      setError("Hatalı kod");
       return;
     }
 
@@ -125,6 +155,14 @@ function Game() {
           onClick={() => {
             setStarted(true);
             setStartTime(new Date());
+            setStats({
+              hash: hash!,
+              duration: 0,
+              moves: 0,
+              completed: false,
+              startTime: startTime,
+              id: uuidv4(),
+            });
           }}
           className="text-xl bg-green-500 text-white p-2 rounded-md hover:bg-green-600"
         >
@@ -158,6 +196,11 @@ function Game() {
               : null}
           </div>
           {won && <InzvaQueen won={false} />}
+          {statsBestTime && (
+            <div className="text-green-800 text-2xl">
+              Yeni en iyi süre!
+            </div>
+          )}
           <div
             className={`inline-grid ${N === 8 ? "grid-cols-8" : "grid-cols-9"}`}
           >

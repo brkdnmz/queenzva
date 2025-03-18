@@ -1,6 +1,7 @@
 import CreateGame from "./pages/create-game";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Game from "./pages/game";
+import Stats from "./pages/stats";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
           <Route path="/" element={<CreateGame />} />
           <Route path="/g/:hash" element={<Game />} />
           <Route path="/g/" element={<Game />} />
+          <Route path="/stats" element={<Stats />} />
         </Routes>
       </BrowserRouter>
     </div>
