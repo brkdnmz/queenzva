@@ -19,7 +19,7 @@ function StatsDurationChart({ stats }: StatsDurationChartProps) {
         grid: {
             containLabel: true,
             left: '3%',
-            right: '4%',
+            right: '8%',
             bottom: '3%'
         },
         tooltip: {
