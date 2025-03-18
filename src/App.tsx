@@ -1,6 +1,6 @@
-import CreateGame from "./pages/CreateGame";
+import CreateGame from "./pages/create-game";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
-import Game from "./pages/Game";
+import Game from "./pages/game";
 
 function App() {
   return (
