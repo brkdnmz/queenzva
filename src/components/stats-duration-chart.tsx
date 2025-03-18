@@ -10,7 +10,7 @@ type StatsDurationChartProps = {
 function StatsDurationChart({ stats }: StatsDurationChartProps) {
     const option = {
         title: {
-            text: 'Kazanılan Oyunlarda Harcanan Süre',
+            text: 'Son 100 kazanılan oyunda harcanan süre',
             left: 'center',
             textStyle: {
                 fontSize: 12
@@ -33,7 +33,7 @@ function StatsDurationChart({ stats }: StatsDurationChartProps) {
             name: 'Tarih',
             nameLocation: 'end' as const,
             nameGap: 30,
-            data: stats.filter(stat => stat.completed).map(stat => new Date(stat.startTime).toLocaleDateString()),
+            data: stats.filter(stat => stat.completed).map(stat => new Date(stat.startTime).toLocaleDateString()).slice(0, 100),
             axisLabel: {
                 rotate: 45,
                 fontSize: 10
@@ -52,7 +52,7 @@ function StatsDurationChart({ stats }: StatsDurationChartProps) {
             }
         },
         series: [{
-            data: stats.filter(stat => stat.completed).map(stat => stat.duration),
+            data: stats.filter(stat => stat.completed).map(stat => stat.duration).slice(0, 100),
             type: 'line' as const,
             smooth: true,
             areaStyle: {
