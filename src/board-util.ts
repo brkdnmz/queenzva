@@ -140,8 +140,8 @@ export function prepareQueensBoard() {
     // console.log(solutionCount);
     if (solutionCount !== 1) continue;
 
-    // console.log(solutionCount);
-    // console.log(Date.now());
+    console.log(solutionCount);
+    console.log(Date.now());
 
     foundBoard = board;
     break;
