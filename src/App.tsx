@@ -1,5 +1,5 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CreateGame from "./pages/create-game";
-import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Game from "./pages/game";
 import Stats from "./pages/stats";
 
