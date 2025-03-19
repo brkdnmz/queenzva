@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import User from "../utils/user";
 
 type NameTagProps = {
@@ -6,11 +6,11 @@ type NameTagProps = {
 };
 
 function NameTag({ changeable = false }: NameTagProps) {
-  const user = new User();
-  const [name, setName] = useState(user.getUser().name);
+  const user = useRef(new User());
+  const [name, setName] = useState(user.current.getUser().name);
 
   const updateName = (name: string) => {
-    user.setName(name);
+    user.current.setName(name);
     setName(name);
   };
 
