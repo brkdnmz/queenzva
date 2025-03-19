@@ -56,7 +56,7 @@ export function prepareQueensBoard() {
       Math.floor(random.generator!.next() * VALID_QUEENS_POSITIONS.length)
     ];
 
-  console.log(Date.now());
+  // console.log(Date.now());
 
   let foundBoard: string[][] = Array.from({ length: N }, () =>
     Array.from({ length: M }, () => "")
